@@ -1,7 +1,6 @@
 backend:
-  name: github
-  repo: pprsval/valentin-cms-proba
-  branch: main
+  name: turbo-github
+  turbo_site_id: 3f1a3281-fb7e-4c7d-810e-c4049cc91122
 publish_mode: editorial_workflow
 media_folder: public/uploads
 public_folder: ../../uploads
