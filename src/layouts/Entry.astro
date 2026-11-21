@@ -1,0 +1,18 @@
+---
+const {frontmatter: entry} = Astro.props;
+const {title, cover, description, category, gallery = [], pdf} = entry;
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const posts = import.meta.glob('../pages/hu/*.md', {eager:true});
+const slug = Astro.url.pathname.split('/').filter(Boolean).at(-1);
+const hasTranslation = Astro.url.pathname.includes('/blog/') && Object.values(posts).some(post => post.frontmatter.original === slug);
+const translation = hasTranslation && Object.entries(posts).find(([,post]) => post.frontmatter.original === slug)?.[0].split('/').at(-1).replace(/\.md$/, '');
+---
+<html lang={entry.original ? 'hu' : 'en'}><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>{title}</title><meta name="robots" content="noindex"/></head><body><main>
+<a href={base+'/'}>Portfolio · CMS trial</a><h1>{title}</h1>
+<p>{category} · {String(entry.date).slice(0,10)}</p>
+{cover && <img src={cover} alt=""/>}<p>{description}</p>
+{translation && <p><a href={base+'/hu/'+translation+'/'}>Read in Hungarian</a></p>}
+{entry.original && <p><a href={base+'/blog/'+entry.original+'/'}>English version</a></p>}
+<slot/>{gallery.map(item => <figure><img src={item.image} alt={item.alt}/><figcaption>{item.caption}</figcaption></figure>)}
+{pdf && <p><a href={pdf}>Download PDF</a></p>}</main></body></html>
+<style is:global>body{background:#faf7f1;color:#302d29;font:1.1rem/1.65 system-ui}main{max-width:48rem;margin:3rem auto;padding:0 1rem}img{max-width:100%;height:auto}a{color:#8c4230}figure{margin:2rem 0}h1{line-height:1.1;font-family:Georgia,serif}</style>
