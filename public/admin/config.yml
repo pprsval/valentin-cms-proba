@@ -1,0 +1,59 @@
+backend:
+  name: github
+  repo: pprsval/valentin-cms-proba
+  branch: main
+publish_mode: editorial_workflow
+media_folder: public/uploads
+public_folder: ../../uploads
+locale: hu
+collections:
+  - name: projects
+    label: Projektek
+    folder: src/pages/projects
+    create: true
+    preview_path: 'projects/{{slug}}/'
+    fields:
+      - {name: layout, widget: hidden, default: ../../layouts/Entry.astro}
+      - {name: title, label: Cím, widget: string}
+      - {name: date, label: Dátum, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD}
+      - {name: category, label: Kategória, widget: select, options: [CAD, Piping, Documentation, Automation]}
+      - {name: description, label: Bevezető, widget: text}
+      - {name: cover, label: Borítókép, widget: image, required: false}
+      - {name: body, label: Szöveg, widget: markdown}
+      - name: gallery
+        label: Galéria
+        widget: list
+        required: false
+        summary: '{{fields.caption}}'
+        fields:
+          - {name: image, label: Kép, widget: image}
+          - {name: alt, label: Képleírás, widget: string}
+          - {name: caption, label: Képaláírás, widget: string}
+      - {name: pdf, label: PDF, widget: file, required: false, media_library: {config: {multiple: false}}}
+  - name: blog
+    label: Angol cikkek
+    folder: src/pages/blog
+    create: true
+    preview_path: 'blog/{{slug}}/'
+    fields:
+      - {name: layout, widget: hidden, default: ../../layouts/Entry.astro}
+      - {name: title, label: Cím, widget: string}
+      - {name: date, label: Dátum, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD}
+      - {name: category, label: Kategória, widget: select, options: [CAD, Piping, Documentation, Automation]}
+      - {name: description, label: Bevezető, widget: text}
+      - {name: cover, label: Borítókép, widget: image, required: false}
+      - {name: body, label: Szöveg, widget: markdown}
+  - name: hu
+    label: Magyar fordítások
+    folder: src/pages/hu
+    create: true
+    preview_path: 'hu/{{slug}}/'
+    fields:
+      - {name: layout, widget: hidden, default: ../../layouts/Entry.astro}
+      - {name: title, label: Cím, widget: string}
+      - {name: date, label: Dátum, widget: datetime, date_format: YYYY-MM-DD, time_format: false, format: YYYY-MM-DD}
+      - {name: category, label: Kategória, widget: select, options: [CAD, Piping, Documentation, Automation]}
+      - {name: description, label: Bevezető, widget: text}
+      - {name: cover, label: Borítókép, widget: image, required: false}
+      - {name: body, label: Szöveg, widget: markdown}
+      - {name: original, label: Angol eredeti, widget: relation, collection: blog, search_fields: [title], display_fields: [title], value_field: "{{slug}}"}
