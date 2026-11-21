@@ -1,0 +1,25 @@
+name: CMS content check
+on:
+  pull_request_target:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+permissions:
+  contents: read
+jobs:
+  content-only:
+    if: startsWith(github.head_ref, 'cms/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          fetch-depth: 0
+          persist-credentials: true
+      - name: Check draft without executing its code
+        env:
+          PR_NUMBER: ${{ github.event.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          git fetch --no-tags origin "refs/pull/$PR_NUMBER/head"
+          node check-cms-changes.mjs draft "$BASE_SHA" "$HEAD_SHA"

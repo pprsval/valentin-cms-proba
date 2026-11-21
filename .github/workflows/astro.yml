@@ -21,6 +21,15 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check CMS publication before deployment
+        if: github.event_name == 'push'
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: node check-cms-changes.mjs release "$BEFORE" "$AFTER"
 
       - name: Setup Node
         uses: actions/setup-node@v4
