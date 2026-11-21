@@ -14,7 +14,7 @@ const date = entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) 
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>{title} — Valentin Peres</title><meta name="robots" content="noindex"/></head>
 <body class:list={[{project:isProject}]}>
 <header class="masthead">
-  <nav aria-label="Main navigation">{['Portfolio','Blog','About'].map(label => <a href={base+'/'+label.toLowerCase()+'/'}>{label}</a>)}</nav>
+  <nav aria-label="Main navigation">{['Home', 'Portfolio', 'Blog', 'About'].map(label => <a aria-current={label === (isProject ? 'Portfolio' : 'Blog') ? 'location' : undefined} href={label === 'Home' ? base+'/' : base+'/'+label.toLowerCase()+'/'}>{label}</a>)}</nav>
   <a class="brand" href={base+'/'}>Valentin Peres</a>
 </header>
 <main>
@@ -62,4 +62,6 @@ figure{margin:2rem 0}
 .project footer{margin-top:4rem;padding:1.5rem 0;border-top:1px solid #959890;font-size:.9rem}
 @media(max-width:640px){.masthead{padding:0 1rem;justify-content:space-between}.brand{position:static;transform:scaleX(.84);transform-origin:right}.masthead nav{gap:1rem}.project main{padding:0 1rem}.project .intro,.project .gallery{grid-template-columns:1fr}.project .intro{gap:1.3rem}.project .copy{margin:2rem 0}}
 .contact{padding:1.6rem 2vw;border-top:1px solid #bbb;font-size:.95rem}
+nav a[aria-current]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
+@media(max-width:440px){.masthead{display:flex;height:auto;flex-direction:column-reverse;align-items:center;gap:.45rem;padding:.65rem 1rem}.masthead nav{gap:1.25rem}}
 </style>
