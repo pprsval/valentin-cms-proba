@@ -1,0 +1,55 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const currentPath = Astro.url.pathname.replace(/\/$/, '');
+const links = ['Home', 'Portfolio', 'Blog', 'About'].map(label => ({
+  label,
+  path: label === 'Home' ? base : base + '/' + label.toLowerCase(),
+}));
+---
+<header>
+  <nav aria-label="Main navigation">
+    {links.map(({ label, path }) => (
+      <a href={path + '/'} aria-current={currentPath === path ? 'page' : undefined}>{label}</a>
+    ))}
+  </nav>
+  <a class="wordmark" href={base + '/'}>Valentin Peres</a>
+</header>
+<style>
+  header {
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 52px;
+    padding: 0 1.8vw;
+    border-bottom: 1px solid #333;
+    background: #d3cfc5;
+    color: #292d2b;
+    font: 1rem/normal "Century Gothic", Avenir, "Segoe UI", sans-serif;
+  }
+  nav { display: flex; gap: 2.2rem; font-size: .8rem; }
+  a { color: inherit; text-decoration: none; }
+  a:hover, a:focus-visible, a[aria-current] {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .3em;
+  }
+  .wordmark {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%) scaleX(.84);
+    font: 900 1.4rem/1 Impact, "Arial Narrow", "Franklin Gothic Medium", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: -.045em;
+    white-space: nowrap;
+  }
+  @media (max-width: 640px) {
+    header { justify-content: space-between; padding: 0 1.1rem; }
+    nav { gap: .8rem; }
+    .wordmark { position: static; transform: scaleX(.84); transform-origin: right; font-size: 1.05rem; }
+  }
+  @media (max-width: 440px) {
+    header { flex-direction: column-reverse; height: auto; gap: .45rem; padding: .65rem 1rem; }
+    nav { gap: 1.25rem; }
+  }
+</style>

@@ -1,14 +1,12 @@
 ---
+import Header from './Header.astro';
 const {title} = Astro.props;
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/><meta name="robots" content="noindex"/><title>{title} — Valentin Peres</title></head><body>
-<header><nav aria-label="Main navigation">{['Home', 'Portfolio', 'Blog', 'About'].map(label => <a aria-current={Astro.url.pathname.replace(/\/$/, '') === base + '/' + label.toLowerCase() ? 'page' : undefined} href={label === 'Home' ? base+'/' : base+'/'+label.toLowerCase()+'/'}>{label}</a>)}</nav><a class="brand" href={base+'/'}>Valentin Peres</a></header>
+<Header />
 <main><h1>{title}</h1><slot/></main><footer><a href="mailto:valentin.cad@proton.me">valentin.cad@proton.me</a></footer></body></html>
 <style>
-:global(*){box-sizing:border-box}body{margin:0;background:#f9f8f5;color:#292d2b;font:1rem/1.55 "Century Gothic",Avenir,"Segoe UI",sans-serif;min-height:100vh;display:flex;flex-direction:column}a{color:inherit}header{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;background:#d3cfc5;border-bottom:1px solid;padding:.75rem 2vw}nav{display:flex;gap:1.5rem;font-size:.9rem}header a{text-decoration:none}header a:hover,[aria-current]{text-decoration:underline;text-underline-offset:.3em}.brand,h1{font-family:Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:-.035em}.brand{font-size:1.3rem;font-weight:bold}main{flex:1;width:min(100% - 3rem,76rem);margin:3.5rem auto 5rem;padding:0;max-width:none}h1{font-size:clamp(1.9rem,3.5vw,2.75rem);line-height:1;margin:0 0 2.5rem}footer{border-top:1px solid;background:#d3cfc5;padding:1.5rem 2vw}@media(max-width:640px){header{display:flex;justify-content:space-between}nav{gap:.8rem}.brand{font-size:1rem}}
-nav a[aria-current]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
-@media(max-width:440px){header{display:flex;height:auto;flex-direction:column-reverse;align-items:center;gap:.45rem;padding:.65rem 1rem}header nav{gap:1.25rem}}
+:global(*){box-sizing:border-box}body{margin:0;background:#f9f8f5;color:#292d2b;font:1rem/1.55 "Century Gothic",Avenir,"Segoe UI",sans-serif;min-height:100vh;display:flex;flex-direction:column}a{color:inherit}h1{font-family:Impact,"Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:-.035em}main{flex:1;width:min(100% - 3rem,76rem);margin:3.5rem auto 5rem;padding:0;max-width:none}h1{font-size:clamp(1.9rem,3.5vw,2.75rem);line-height:1;margin:0 0 2.5rem}footer{border-top:1px solid;background:#d3cfc5;padding:1.5rem 2vw}
 h1{font-family:"Arial Narrow","Aptos Narrow","Segoe UI",Arial,sans-serif;font-weight:400}
 </style>
