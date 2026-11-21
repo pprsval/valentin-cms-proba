@@ -1,4 +1,72 @@
+﻿---
+const modules = import.meta.glob('./{projects,blog}/*.md', { eager: true });
+const entries = Object.entries(modules).map(([path, page]) => {
+  const href = path.replace(/\.md$/, '/');
+  const data = page.frontmatter;
+  const base = 'https://portfolio.invalid/';
+  const cover = data.cover && new URL(data.cover, new URL(href, base));
+  return {
+    ...data, href,
+    cover: cover?.origin === 'https://portfolio.invalid' ? '.' + cover.pathname : cover?.href,
+  };
+});
+const projects = entries.filter(item => item.href.startsWith('./projects/')).sort((a, b) =>
+  Number(b.href === './projects/urban-k1/') - Number(a.href === './projects/urban-k1/') ||
+  Number(Boolean(b.cover)) - Number(Boolean(a.cover)) ||
+  new Date(b.date).getTime() - new Date(a.date).getTime()
+);
+const posts = entries.filter(item => item.href.startsWith('./blog/'));
 ---
-const entries=import.meta.glob('./{projects,blog}/*.md',{eager:true});
----
-<html lang="hu"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>Portfóliópróba</title><meta name="robots" content="noindex"/></head><body><main><h1>Portfóliópróba</h1><a href="./admin/">Adminfelület</a><ul>{Object.entries(entries).map(([path,post])=><li><a href={path.replace(/\.md$/, '/')}>{post.frontmatter.title}</a></li>)}</ul></main></body></html>
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="robots" content="noindex"/><title>Portfolio — Valentin Peres</title>
+</head>
+<body>
+  <header>
+    <nav aria-label="Main navigation"><a href="./" aria-current="page">Portfolio</a><a href="#blog">Blog</a></nav>
+    <a class="wordmark" href="./" aria-label="Valentin Peres, portfolio">Valentin Peres</a>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="works">
+      <h1 id="works">Selected Works</h1>
+      <p>A collection of engineering projects, technical designs, documentation, and creative work. These projects reflect my approach to technical problem-solving, precision, and practical design, combining engineering knowledge with an interest in technology and visual communication.</p>
+    </section>
+    <div class="gallery">
+      {projects.filter(project => project.cover).map((project, index) =>
+        <a class="project" href={project.href}>
+          <figure><img src={project.cover} alt="" loading={index < 2 ? 'eager' : 'lazy'}/>
+            <figcaption><h2>{project.title}</h2><span>{project.category}</span></figcaption>
+          </figure>
+        </a>
+      )}
+    </div>
+    <div class="more">{projects.filter(project => !project.cover).map(project => <a href={project.href}>{project.title}</a>)}</div>
+    <section id="blog"><h2>Blog</h2>{posts.map(post => <a href={post.href}>{post.title}</a>)}</section>
+  </main>
+  <footer><strong>Valentin Peres</strong><a href="./admin/" lang="hu">Szerkesztő</a></footer>
+</body>
+</html>
+<style>
+  :global(*){box-sizing:border-box}
+  :global(body){margin:0;color:#292d2b;background:#fff;font-family:"Century Gothic",Avenir,"Segoe UI",sans-serif}
+  a{color:inherit;text-decoration:none}
+  a:hover,a:focus-visible{text-decoration:underline;text-underline-offset:.3em}
+  header{height:52px;border-bottom:1px solid #333;display:flex;align-items:center;position:relative;padding:0 1.8vw}
+  nav{display:flex;gap:2.2rem;font-size:.8rem}
+  [aria-current]{text-decoration:underline;text-underline-offset:5px}
+  .wordmark,footer strong{font-family:Impact,"Arial Narrow","Franklin Gothic Medium",sans-serif;text-transform:uppercase;font-weight:900;letter-spacing:-.045em}
+  .wordmark{position:absolute;left:50%;transform:translateX(-50%) scaleX(.84);font-size:1.4rem;white-space:nowrap}
+  .intro{padding:clamp(3rem,4.2vw,5rem) 4.4vw 3rem;min-height:clamp(19rem,26.3vw,31rem)}
+  h1{font-size:.82rem;font-style:italic;margin:0 0 1.85rem;font-weight:600}
+  .intro p{max-width:70em;width:92%;font-size:clamp(1.12rem,1.34vw,1.55rem);line-height:1.43;margin:0;letter-spacing:.004em}
+  .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem 1.8vw;padding:0 1.8vw}
+  figure{margin:0}figure img{width:100%;aspect-ratio:3/2;object-fit:contain;display:block;background:#f4f2ee}
+  figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid #c5c5bf}
+  h2{font-size:1.35rem;font-weight:550;margin:0}figcaption span,footer{font-size:.83rem}
+  .more,#blog{margin:3rem 1.8vw}.more a,#blog a{display:block;width:fit-content;text-decoration:underline;text-underline-offset:4px;margin:1rem 0}
+  footer{padding:1.6rem 1.8vw;border-top:1px solid;display:flex;align-items:center;justify-content:space-between}footer strong{font-size:1.2rem}
+  @media(max-width:640px){header{padding:0 1.1rem;justify-content:space-between}nav{gap:1rem}.wordmark{position:static;transform:scaleX(.84);transform-origin:right}.intro{padding:3.1rem 1.25rem 4rem;min-height:0}.intro p{width:100%}.gallery{grid-template-columns:1fr;gap:2.3rem;padding:0 1rem}.more,#blog{margin:2.8rem 1rem}footer{padding:1.4rem 1rem}}
+</style>
+
