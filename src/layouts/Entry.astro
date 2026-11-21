@@ -1,18 +1,66 @@
----
-const {frontmatter: entry} = Astro.props;
+﻿---
+const { frontmatter: entry } = Astro.props;
 const {title, cover, description, category, gallery = [], pdf} = entry;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
-const posts = import.meta.glob('../pages/hu/*.md', {eager:true});
+const isProject = Astro.url.pathname.includes('/projects/');
+const posts = import.meta.glob('../pages/hu/*.md', { eager: true });
 const slug = Astro.url.pathname.split('/').filter(Boolean).at(-1);
-const hasTranslation = Astro.url.pathname.includes('/blog/') && Object.values(posts).some(post => post.frontmatter.original === slug);
-const translation = hasTranslation && Object.entries(posts).find(([,post]) => post.frontmatter.original === slug)?.[0].split('/').at(-1).replace(/\.md$/, '');
+const translation = Astro.url.pathname.includes('/blog/') &&
+  Object.entries(posts).find(([, post]) => post.frontmatter.original === slug)?.[0].split('/').at(-1).replace(/\.md$/, '');
+const date = entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) : String(entry.date ?? '').slice(0, 10);
 ---
-<html lang={entry.original ? 'hu' : 'en'}><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>{title}</title><meta name="robots" content="noindex"/></head><body><main>
-<a href={base+'/'}>Portfolio · CMS trial</a><h1>{title}</h1>
-<p>{category} · {String(entry.date).slice(0,10)}</p>
-{cover && <img src={cover} alt=""/>}<p>{description}</p>
-{translation && <p><a href={base+'/hu/'+translation+'/'}>Read in Hungarian</a></p>}
-{entry.original && <p><a href={base+'/blog/'+entry.original+'/'}>English version</a></p>}
-<slot/>{gallery.map(item => <figure><img src={item.image} alt={item.alt}/><figcaption>{item.caption}</figcaption></figure>)}
-{pdf && <p><a href={pdf}>Download PDF</a></p>}</main></body></html>
-<style is:global>body{background:#faf7f1;color:#302d29;font:1.1rem/1.65 system-ui}main{max-width:48rem;margin:3rem auto;padding:0 1rem}img{max-width:100%;height:auto}a{color:#8c4230}figure{margin:2rem 0}h1{line-height:1.1;font-family:Georgia,serif}</style>
+<!doctype html>
+<html lang={entry.original ? 'hu' : 'en'}>
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>{title} — Valentin Peres</title><meta name="robots" content="noindex"/></head>
+<body class:list={[{project:isProject}]}>
+{isProject && <header class="masthead">
+  <nav aria-label="Main navigation"><a href={base+'/'}>Portfolio</a><a href={base+'/#blog'}>Blog</a></nav>
+  <a class="brand" href={base+'/'}>Valentin Peres</a>
+</header>}
+<main>
+  {!isProject && <a href={base+'/'}>Portfolio</a>}
+  <div class="intro">
+    <div>
+      <h1>{title}</h1>
+      <p class="meta">{category}{category && date && ' · '}<time datetime={date}>{date}</time></p>
+    </div>
+    {description && <p class="description">{description}</p>}
+  </div>
+  {cover && <img class="cover" src={cover} alt=""/>}
+  <div class="copy">
+    {translation && <p><a href={base+'/hu/'+translation+'/'}>Read in Hungarian</a></p>}
+    {entry.original && <p><a href={base+'/blog/'+entry.original+'/'}>English version</a></p>}
+    <slot/>
+  </div>
+  {gallery.length > 0 && <div class="gallery">{gallery.map(item =>
+    <figure><img src={item.image} alt={item.alt || ''} loading="lazy"/>{item.caption && <figcaption>{item.caption}</figcaption>}</figure>)}</div>}
+  {pdf && <p class="downloads"><a href={pdf}>Download PDF</a></p>}
+  {isProject && <footer><a href={base+'/'}>Back to portfolio</a></footer>}
+</main></body></html>
+<style is:global>
+*{box-sizing:border-box}
+body{margin:0;background:#faf7f1;color:#292d2b;font:1.1rem/1.6 system-ui,sans-serif}
+main{max-width:48rem;margin:3rem auto;padding:0 1rem}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit;text-underline-offset:.28em}
+h1{font-family:Georgia,serif;line-height:1.05}
+figure{margin:2rem 0}
+.project{background:#e4e2da;font-family:"Century Gothic",Avenir,"Segoe UI",sans-serif}
+.masthead{position:relative;display:flex;align-items:center;height:52px;padding:0 1.8vw;border-bottom:1px solid #444842}
+.masthead nav{display:flex;gap:2.2rem;font-size:.8rem}
+.masthead a{text-decoration:none}.masthead nav a:first-child,.masthead a:hover{text-decoration:underline}
+.brand,.project h1{font-family:Impact,"Arial Narrow","Franklin Gothic Medium",sans-serif;font-weight:900;text-transform:uppercase}
+.brand{position:absolute;left:50%;transform:translateX(-50%) scaleX(.84);font-size:1.4rem;letter-spacing:-.045em;white-space:nowrap}
+.project main{max-width:100rem;margin:0 auto;padding:0 4.4vw}
+.project .intro{display:grid;grid-template-columns:1.15fr 1fr;gap:4vw;align-items:end;padding:clamp(3rem,6vw,6rem) 0 clamp(2rem,3.4vw,4rem)}
+.project h1{margin:0;font-size:clamp(3rem,6.6vw,7rem);letter-spacing:-.045em;line-height:1;overflow-wrap:anywhere}
+.meta,.project figcaption{font-size:.86rem}.meta{margin:.8rem 0 0}
+.project .description{max-width:35em;margin:0;font-size:clamp(1.05rem,1.5vw,1.4rem);line-height:1.4;overflow-wrap:anywhere}
+.project .cover{width:100%;height:auto}
+.project .copy{max-width:48rem;margin:clamp(2rem,5vw,5rem) auto;overflow-wrap:anywhere}
+.project .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3vw}
+.project figure{margin:0 0 2rem}.project figure img{width:100%}.project figcaption{margin-top:.6rem}
+.project footer{margin-top:4rem;padding:1.5rem 0;border-top:1px solid #959890;font-size:.9rem}
+@media(max-width:640px){.masthead{padding:0 1rem;justify-content:space-between}.brand{position:static;transform:scaleX(.84);transform-origin:right}.masthead nav{gap:1rem}.project main{padding:0 1rem}.project .intro,.project .gallery{grid-template-columns:1fr}.project .intro{gap:1.3rem}.project .copy{margin:2rem 0}}
+</style>
+
