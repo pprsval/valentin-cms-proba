@@ -12,5 +12,6 @@ gallery:
   - image: ../../uploads/slide3.png
     alt: aa
     caption: bb
+pdf: ../../uploads/urban_k1_interactive_kiosk.pdf
 ---
 hjs
