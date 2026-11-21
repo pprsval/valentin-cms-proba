@@ -56,3 +56,17 @@ collections:
       - {name: cover, label: Borítókép, widget: image, required: false}
       - {name: body, label: Szöveg, widget: markdown}
       - {name: original, label: Angol eredeti, widget: relation, collection: blog, search_fields: [title], display_fields: [title], value_field: "{{slug}}"}
+
+  - name: settings
+    label: Oldalbeállítások
+    files:
+      - name: homepage
+        label: Főoldal
+        file: homepage.json
+        format: json
+        preview_path: /
+        fields:
+          - {name: title, label: Főcím, widget: string}
+          - {name: description, label: Bemutatkozás, widget: text}
+          - {name: portrait, label: Portré, widget: image, required: false}
+          - {name: works, label: Projektek bevezetője, widget: text}
