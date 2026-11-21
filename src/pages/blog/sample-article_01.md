@@ -4,7 +4,7 @@ title: Sample article_01
 date: 2026-11-21
 category: CAD
 description: Demonstration content for the CMS trial.
-cover: ../../uploads/slide4.png
+cover: ../../uploads/proba-kep.png
 ---
 ***Ez egy tesz most***
 
