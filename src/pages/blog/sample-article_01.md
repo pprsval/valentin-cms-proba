@@ -8,8 +8,11 @@ cover: ../../uploads/proba-kep.png
 ---
 ***Ez egy tesz most***
 
+* ***123***
+*
+
 ![]()
 
 És most tovább
 
-![](../../uploads/slide5.png)
+1. ![](../../uploads/slide5.png)
