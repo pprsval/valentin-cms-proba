@@ -8,7 +8,7 @@ cover: ../../uploads/slide4.png
 ---
 ***Ez egy tesz most***
 
-![](../../uploads/slide4.png)
+![]()
 
 És most tovább
 
