@@ -12,17 +12,5 @@ const entries = Object.entries(import.meta.glob('./{projects,blog}/*.md',{eager:
 ---
 <Section title={projects?'Portfolio':'Blog'}>
   {projects && home.works && <p class="portfolio-intro">{home.works}</p>}
-  <div class:list={['entries',{projects}]}>{entries.map(item=><a href={item.href} class:list={{ thumbnail: !projects && !!item.image }}>{item.image && <img src={item.image} alt="" loading="lazy"/>}<div><small>{item.category} · {new Date(item.date).toISOString().slice(0,10)}</small><h2>{item.title}</h2><p>{item.description}</p></div></a>)}</div></Section>
-<style>.portfolio-intro{max-width:72ch;margin:0 0 clamp(2rem,4vw,4rem);font-size:clamp(1.1rem,1.5vw,1.4rem);line-height:1.5}.entries{display:grid;gap:2.5rem}.projects{grid-template-columns:repeat(2,minmax(0,1fr))}.entries a{border-top:1px solid #9c9d94;padding-top:1rem;text-decoration:none;color:inherit}.entries a:hover h2{text-decoration:underline}img{width:100%;aspect-ratio:3/2;object-fit:contain;background:#eae7e0}h2{margin:.3rem 0;font-size:1.6rem}p{max-width:60ch;margin:.3rem 0}small{color:#535750}@media(max-width:640px){.projects{grid-template-columns:1fr}}
-  .entries .thumbnail {
-    display: grid;
-    grid-template-columns: 240px minmax(0, 1fr);
-    align-items: center;
-    gap: 1.5rem;
-  }
-  .thumbnail img { display: block; width: 240px; height: 160px; }
-  @media (max-width: 640px) {
-    .entries .thumbnail { grid-template-columns: 1fr; gap: .75rem; }
-    .thumbnail img { width: min(100%, 240px); height: auto; }
-  }
-</style>
+  <div class:list={['entries',{projects}]}>{entries.map(item=><a href={item.href}>{item.image && <img src={item.image} alt="" loading="lazy"/>}<div><small>{item.category} · {new Date(item.date).toISOString().slice(0,10)}</small><h2>{item.title}</h2><p>{item.description}</p></div></a>)}</div></Section>
+<style>.portfolio-intro{max-width:72ch;margin:0 0 clamp(2rem,4vw,4rem);font-size:clamp(1.1rem,1.5vw,1.4rem);line-height:1.5}.entries{display:grid;gap:2.5rem}.projects{grid-template-columns:repeat(2,minmax(0,1fr))}.entries a{border-top:1px solid #9c9d94;padding-top:1rem;text-decoration:none;color:inherit}.entries a:hover h2{text-decoration:underline}img{width:100%;aspect-ratio:3/2;object-fit:contain;background:#eae7e0}h2{margin:.3rem 0;font-size:1.6rem}p{max-width:60ch;margin:.3rem 0}small{color:#535750}@media(max-width:640px){.projects{grid-template-columns:1fr}}</style>
