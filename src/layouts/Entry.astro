@@ -12,7 +12,7 @@ const date = entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) 
 <!doctype html>
 <html lang={entry.original ? 'hu' : 'en'}>
 <head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>{title} — Valentin Peres</title><meta name="robots" content="noindex"/></head>
-<body class:list={[{project:isProject}]}>
+<body class:list={[{project:isProject, 'blog-entry':!isProject}]}>
 <header class="masthead">
   <nav aria-label="Main navigation">{['Home', 'Portfolio', 'Blog', 'About'].map(label => <a aria-current={label === (isProject ? 'Portfolio' : 'Blog') ? 'location' : undefined} href={label === 'Home' ? base+'/' : base+'/'+label.toLowerCase()+'/'}>{label}</a>)}</nav>
   <a class="brand" href={base+'/'}>Valentin Peres</a>
@@ -115,5 +115,5 @@ a.zoom{display:block;cursor:zoom-in}
 .viewer-bar button:disabled{visibility:hidden}
 #caption{text-align:center;overflow-wrap:anywhere}
 .project h1{-webkit-text-stroke:.4px #e4e2da}
-body:not(.project) main h1{-webkit-text-stroke:.3px #faf7f1}
+body.blog-entry main h1{-webkit-text-stroke:.3px #faf7f1}
 </style>
