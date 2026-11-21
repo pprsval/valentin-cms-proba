@@ -17,6 +17,13 @@ const projects = entries.filter(item => item.href.startsWith('./projects/')).sor
   Number(Boolean(b.cover)) - Number(Boolean(a.cover)) ||
   new Date(b.date).getTime() - new Date(a.date).getTime()
 );
+const defaults = [{type:'project', slug:'urban-k1'}, {type:'project', slug:'sample-plate'}];
+const featured = (home.featured ?? defaults).slice(0, 3).flatMap(selection => {
+  const folder = {project: 'projects', article: 'blog'}[selection.type];
+  const entry = entries.find(item => item.href === `./${folder}/${selection.slug}/`);
+  return entry ? [entry] : [];
+});
+const otherProjects = projects.filter(project => !featured.includes(project));
 const posts = entries.filter(item => item.href.startsWith('./blog/'));
 ---
 <!doctype html>
@@ -33,21 +40,21 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
   <main>
     <section id="about" aria-labelledby="headline">
       <div class="hero">
-        <div class="bio"><h1 id="headline">{home.title}</h1><p>{home.description}</p><a class="cta" href="#works">Explore projects</a></div>
+        <div class="bio"><h1 id="headline">{home.title}</h1><p>{home.description}</p><a class="cta" href="#works">Explore selected work</a></div>
         {portrait && <img class="portrait" src={portrait} alt="Valentin Peres" width="307" height="364" fetchpriority="high"/>}
       </div>
     </section>
-    <section class="intro" id="works" aria-labelledby="works-heading"><h2 id="works-heading">Selected Works</h2><p>{home.works}</p></section>
+    <section class="intro" id="works" aria-labelledby="works-heading"><h2 id="works-heading">Selected Work &amp; Writing</h2><p>{home.works}</p></section>
     <div class="gallery">
-      {projects.filter(project => project.cover).map((project, index) =>
+      {featured.map((project, index) =>
         <a class="project" href={project.href}>
-          <figure><img src={project.cover} alt="" loading={index < 2 ? 'eager' : 'lazy'}/>
-            <figcaption><h2>{project.title}</h2><span>{project.category}</span></figcaption>
+          <figure>{project.cover ? <img src={project.cover} alt="" loading={index < 2 ? 'eager' : 'lazy'}/> : <div class="text-cover">{project.description || project.title}</div>}
+            <figcaption><h2>{project.title}</h2><span>{project.href.startsWith('./blog/') ? 'Article' : 'Project'}</span></figcaption>
           </figure>
         </a>
       )}
     </div>
-    <div class="more">{projects.filter(project => !project.cover).map(project => <a href={project.href}>{project.title}</a>)}</div>
+    <div class="more">{otherProjects.length > 0 && <h2>More projects</h2>}{otherProjects.map(project => <a href={project.href}>{project.title}</a>)}</div>
     <section id="blog"><h2>Blog</h2>{posts.map(post => <a href={post.href}>{post.title}</a>)}</section>
   </main>
   <footer id="contact"><div><strong>Valentin Peres</strong><a class="email" href="mailto:valentin.cad@proton.me">valentin.cad@proton.me</a></div><a href="./admin/" lang="hu">Szerkesztő</a></footer>
@@ -84,4 +91,5 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
   .intro h2{font-style:italic;font-size:.9rem;margin:0 0 1.85rem}
   footer .email{display:block;margin-top:.5rem;font-size:1rem}
   @media(max-width:640px){.hero{grid-template-columns:1fr;gap:2rem}.portrait{max-width:22rem}.bio p{margin:1.3rem 0 1.6rem}.wordmark{font-size:1.05rem}header nav{gap:.8rem}}
+  .text-cover{aspect-ratio:3/2;padding:8%;display:grid;align-content:center;background:#e2dfd6;font-size:clamp(1.15rem,2vw,2rem);line-height:1.3}
 </style>
