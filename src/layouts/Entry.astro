@@ -25,17 +25,59 @@ const date = entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) 
     </div>
     {description && <p class="description">{description}</p>}
   </div>
-  {cover && <img class="cover" src={cover} alt=""/>}
+  {cover && (isProject ? <a class="zoom" href={cover} aria-label="Open project cover"><img class="cover" src={cover} alt=""/></a> : <img class="cover" src={cover} alt=""/>)}
   <div class="copy">
     {translation && <p><a href={base+'/hu/'+translation+'/'}>Read in Hungarian</a></p>}
     {entry.original && <p><a href={base+'/blog/'+entry.original+'/'}>English version</a></p>}
     <slot/>
   </div>
-  {gallery.length > 0 && <div class="gallery">{gallery.map(item =>
-    <figure><img src={item.image} alt={item.alt || ''} loading="lazy"/>{item.caption && <figcaption>{item.caption}</figcaption>}</figure>)}</div>}
+  {gallery.length > 0 && <div class="gallery">{gallery.map((item, index) =>
+    <figure><a class="zoom" href={item.image} aria-label={`Open image ${index + 1}: ${item.caption || item.alt || title}`}><img src={item.image} alt={item.alt || ''} loading="lazy"/></a>{item.caption && <figcaption>{item.caption}</figcaption>}</figure>)}</div>}
   {pdf && <p class="downloads"><a href={pdf}>Download PDF</a></p>}
   {isProject && <footer><a href={base+'/portfolio/'}>Back to portfolio</a></footer>}
-</main><footer class="contact"><a href="mailto:valentin.cad@proton.me">valentin.cad@proton.me</a></footer></body></html>
+  {isProject && (cover || gallery.length > 0) && <dialog id="viewer" aria-label="Project images">
+    <div class="viewer-bar"><span id="position" aria-live="polite"></span><button type="button" id="dismiss" autofocus>Close ×</button></div>
+    <img id="enlarged" alt=""/>
+    <div class="viewer-bar"><button type="button" id="previous" aria-label="Previous image">←</button><span id="caption"></span><button type="button" id="next" aria-label="Next image">→</button></div>
+  </dialog>}
+</main>
+<script is:inline>
+  const viewer = document.querySelector('#viewer');
+  if (viewer && typeof viewer.showModal === 'function') {
+    const links = Array.from(document.querySelectorAll('main a.zoom'));
+    const enlarged = viewer.querySelector('#enlarged');
+    const previous = viewer.querySelector('#previous');
+    const next = viewer.querySelector('#next');
+    let current = 0;
+
+    function show(index) {
+      current = (index + links.length) % links.length;
+      const link = links[current];
+      enlarged.src = link.href;
+      enlarged.alt = link.querySelector('img').alt;
+      viewer.querySelector('#caption').textContent = link.closest('figure')?.querySelector('figcaption')?.textContent || '';
+      viewer.querySelector('#position').textContent = (current + 1) + ' / ' + links.length;
+    }
+
+    links.forEach((link, index) => link.addEventListener('click', event => {
+      if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      show(index);
+      viewer.showModal();
+    }));
+    previous.disabled = next.disabled = links.length < 2;
+    previous.onclick = () => show(current - 1);
+    next.onclick = () => show(current + 1);
+    viewer.querySelector('#dismiss').onclick = () => viewer.close();
+    viewer.addEventListener('keydown', event => {
+      if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+        event.preventDefault();
+        show(current + (event.key === 'ArrowLeft' ? -1 : 1));
+      }
+    });
+  }
+</script>
+<footer class="contact"><a href="mailto:valentin.cad@proton.me">valentin.cad@proton.me</a></footer></body></html>
 <style is:global>
 *{box-sizing:border-box}
 body{margin:0;background:#faf7f1;color:#292d2b;font:1.1rem/1.6 system-ui,sans-serif}
@@ -64,4 +106,12 @@ figure{margin:2rem 0}
 .contact{padding:1.6rem 2vw;border-top:1px solid #bbb;font-size:.95rem}
 nav a[aria-current]{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.3em}
 @media(max-width:440px){.masthead{display:flex;height:auto;flex-direction:column-reverse;align-items:center;gap:.45rem;padding:.65rem 1rem}.masthead nav{gap:1.25rem}}
+a.zoom{display:block;cursor:zoom-in}
+#viewer{width:min(96vw,92rem);max-width:96vw;max-height:96dvh;border:0;border-radius:.5rem;padding:1rem;background:#222522;color:#fff}
+#viewer::backdrop{background:rgba(0,0,0,.78)}
+#enlarged{width:100%;height:min(70dvh,58rem);object-fit:contain}
+.viewer-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.35rem 0}
+.viewer-bar button{background:#363a36;color:white;border:1px solid #777;border-radius:.3rem;min-width:44px;min-height:44px;padding:0 .8rem;cursor:pointer;font:inherit}
+.viewer-bar button:disabled{visibility:hidden}
+#caption{text-align:center;overflow-wrap:anywhere}
 </style>
