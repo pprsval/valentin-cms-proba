@@ -69,7 +69,7 @@ collections:
           - {name: title, label: Főcím, widget: string}
           - {name: description, label: Bemutatkozás, widget: text}
           - {name: portrait, label: Portré, widget: image, required: false}
-          - {name: works, label: Projektek bevezetője, widget: text}
+          - {name: works, label: A Portfolio oldal bevezetője, widget: text}
           - name: featured
             label: Kiemelt tartalmak
             widget: list
