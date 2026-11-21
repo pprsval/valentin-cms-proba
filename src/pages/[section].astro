@@ -1,0 +1,13 @@
+---
+import Section from '../layouts/Section.astro';
+export function getStaticPaths(){return ['portfolio','blog'].map(section=>({params:{section}}));}
+const projects = Astro.params.section === 'portfolio';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const folder = projects ? 'projects' : 'blog';
+const entries = Object.entries(import.meta.glob('./{projects,blog}/*.md',{eager:true,import:'frontmatter'}))
+  .filter(([path])=>path.startsWith('./'+folder+'/'))
+  .map(([path,data])=>({...data,href:base+'/'+path.slice(2,-3)+'/',image:data.cover?.replace(/^(?:\.\.\/)*\/?uploads\//,base+'/uploads/')}))
+  .sort((a,b)=>new Date(b.date).getTime()-new Date(a.date).getTime() || a.title.localeCompare(b.title));
+---
+<Section title={projects?'Portfolio':'Blog'}><div class:list={['entries',{projects}]}>{entries.map(item=><a href={item.href}>{item.image && <img src={item.image} alt="" loading="lazy"/>}<div><small>{item.category} · {new Date(item.date).toISOString().slice(0,10)}</small><h2>{item.title}</h2><p>{item.description}</p></div></a>)}</div></Section>
+<style>.entries{display:grid;gap:2.5rem}.projects{grid-template-columns:repeat(2,minmax(0,1fr))}.entries a{border-top:1px solid #9c9d94;padding-top:1rem;text-decoration:none;color:inherit}.entries a:hover h2{text-decoration:underline}img{width:100%;aspect-ratio:3/2;object-fit:contain;background:#eae7e0}h2{margin:.3rem 0;font-size:1.6rem}p{max-width:60ch;margin:.3rem 0}small{color:#535750}@media(max-width:640px){.projects{grid-template-columns:1fr}}</style>

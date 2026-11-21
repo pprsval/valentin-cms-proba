@@ -1,6 +1,7 @@
 ---
 import home from '../../homepage.json';
 const portrait = home.portrait?.replace(/^(?:\.\.\/)*\/?uploads\//, './uploads/');
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const modules = import.meta.glob('./{projects,blog}/*.md', { eager: true });
 const entries = Object.entries(modules).map(([path, page]) => {
   const href = path.replace(/\.md$/, '/');
@@ -12,19 +13,12 @@ const entries = Object.entries(modules).map(([path, page]) => {
     cover: cover?.origin === 'https://portfolio.invalid' ? '.' + cover.pathname : cover?.href,
   };
 });
-const projects = entries.filter(item => item.href.startsWith('./projects/')).sort((a, b) =>
-  Number(b.href === './projects/urban-k1/') - Number(a.href === './projects/urban-k1/') ||
-  Number(Boolean(b.cover)) - Number(Boolean(a.cover)) ||
-  new Date(b.date).getTime() - new Date(a.date).getTime()
-);
 const defaults = [{type:'project', slug:'urban-k1'}, {type:'project', slug:'sample-plate'}];
 const featured = (home.featured ?? defaults).slice(0, 3).flatMap(selection => {
   const folder = {project: 'projects', article: 'blog'}[selection.type];
   const entry = entries.find(item => item.href === `./${folder}/${selection.slug}/`);
   return entry ? [entry] : [];
 });
-const otherProjects = projects.filter(project => !featured.includes(project));
-const posts = entries.filter(item => item.href.startsWith('./blog/'));
 ---
 <!doctype html>
 <html lang="en">
@@ -34,7 +28,7 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
 </head>
 <body>
   <header>
-    <nav aria-label="Main navigation"><a href="#works">Portfolio</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
+    <nav aria-label="Main navigation">{['Portfolio','Blog','About'].map(label => <a href={base+'/'+label.toLowerCase()+'/'}>{label}</a>)}</nav>
     <a class="wordmark" href="./" aria-label="Valentin Peres, portfolio">Valentin Peres</a>
   </header>
   <main>
@@ -54,8 +48,6 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
         </a>
       )}
     </div>
-    <div class="more">{otherProjects.length > 0 && <h2>More projects</h2>}{otherProjects.map(project => <a href={project.href}>{project.title}</a>)}</div>
-    <section id="blog"><h2>Blog</h2>{posts.map(post => <a href={post.href}>{post.title}</a>)}</section>
   </main>
   <footer id="contact"><div><strong>Valentin Peres</strong><a class="email" href="mailto:valentin.cad@proton.me">valentin.cad@proton.me</a></div><a href="./admin/" lang="hu">Szerkesztő</a></footer>
 </body>
@@ -73,7 +65,7 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
   .intro{padding:clamp(3rem,4.2vw,5rem) 4.4vw 3rem;min-height:clamp(19rem,26.3vw,31rem)}
   h1{font-size:.82rem;font-style:italic;margin:0 0 1.85rem;font-weight:600}
   .intro p{max-width:70em;width:92%;font-size:clamp(1.12rem,1.34vw,1.55rem);line-height:1.43;margin:0;letter-spacing:.004em}
-  .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem 1.8vw;padding:0 1.8vw}
+  .gallery{margin-bottom:4rem;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4rem 1.8vw;padding:0 1.8vw}
   figure{margin:0}figure img{width:100%;aspect-ratio:3/2;object-fit:contain;display:block;background:#f4f2ee}
   figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:1rem 0;border-bottom:1px solid #c5c5bf}
   h2{font-size:1.35rem;font-weight:550;margin:0}figcaption span,footer{font-size:.83rem}
