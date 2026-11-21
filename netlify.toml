@@ -1,5 +1,8 @@
 [build]
   command = "npm run build"
   publish = "dist"
+  # GitHub Pages publishes the site. Netlify builds pull request previews only.
+  ignore = 'test "$CONTEXT" != "deploy-preview"'
+
 [build.environment]
   NODE_VERSION = "22.23.4"
