@@ -1,0 +1,4 @@
+---
+const entries=import.meta.glob('./{projects,blog}/*.md',{eager:true});
+---
+<html lang="hu"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><title>Portfóliópróba</title><meta name="robots" content="noindex"/></head><body><main><h1>Portfóliópróba</h1><a href="./admin/">Adminfelület</a><ul>{Object.entries(entries).map(([path,post])=><li><a href={path.replace(/\.md$/, '/')}>{post.frontmatter.title}</a></li>)}</ul></main></body></html>
