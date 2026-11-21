@@ -11,6 +11,10 @@
     {
       "type": "article",
       "slug": "sample"
+    },
+    {
+      "type": "article",
+      "slug": "sample-article_01"
     }
   ]
 }
