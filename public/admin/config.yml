@@ -70,3 +70,24 @@ collections:
           - {name: description, label: Bemutatkozás, widget: text}
           - {name: portrait, label: Portré, widget: image, required: false}
           - {name: works, label: Projektek bevezetője, widget: text}
+          - name: featured
+            label: Kiemelt tartalmak
+            widget: list
+            typeKey: type
+            min: 2
+            max: 3
+            summary: '{{fields.slug}}'
+            default:
+              - {type: project, slug: urban-k1}
+              - {type: project, slug: sample-plate}
+            types:
+              - name: project
+                label: Projekt
+                widget: object
+                fields:
+                  - {name: slug, label: Projekt címe, widget: relation, collection: projects, search_fields: [title], display_fields: [title], value_field: '{{slug}}'}
+              - name: article
+                label: Blogcikk
+                widget: object
+                fields:
+                  - {name: slug, label: Cikk címe, widget: relation, collection: blog, search_fields: [title], display_fields: [title], value_field: '{{slug}}'}
