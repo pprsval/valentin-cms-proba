@@ -91,3 +91,12 @@ collections:
                 widget: object
                 fields:
                   - {name: slug, label: Cikk címe, widget: relation, collection: blog, search_fields: [title], display_fields: [title], value_field: '{{slug}}'}
+      - name: about
+        label: About – bemutatkozás és CV
+        file: src/pages/about.md
+        preview_path: about/
+        fields:
+          - {name: layout, widget: hidden, default: ../layouts/About.astro}
+          - {name: title, label: Cím, widget: string}
+          - {name: body, label: Bemutatkozás, widget: markdown}
+          - {name: cv, label: Önéletrajz (PDF), widget: file, required: false, accept: .pdf, media_library: {config: {multiple: false}}}
