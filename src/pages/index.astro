@@ -1,4 +1,6 @@
-﻿---
+---
+import home from '../../homepage.json';
+const portrait = home.portrait?.replace(/^(?:\.\.\/)*\/?uploads\//, './uploads/');
 const modules = import.meta.glob('./{projects,blog}/*.md', { eager: true });
 const entries = Object.entries(modules).map(([path, page]) => {
   const href = path.replace(/\.md$/, '/');
@@ -25,14 +27,17 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
 </head>
 <body>
   <header>
-    <nav aria-label="Main navigation"><a href="./" aria-current="page">Portfolio</a><a href="#blog">Blog</a></nav>
+    <nav aria-label="Main navigation"><a href="#works">Portfolio</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
     <a class="wordmark" href="./" aria-label="Valentin Peres, portfolio">Valentin Peres</a>
   </header>
   <main>
-    <section class="intro" aria-labelledby="works">
-      <h1 id="works">Selected Works</h1>
-      <p>A collection of engineering projects, technical designs, documentation, and creative work. These projects reflect my approach to technical problem-solving, precision, and practical design, combining engineering knowledge with an interest in technology and visual communication.</p>
+    <section id="about" aria-labelledby="headline">
+      <div class="hero">
+        <div class="bio"><h1 id="headline">{home.title}</h1><p>{home.description}</p><a class="cta" href="#works">Explore projects</a></div>
+        {portrait && <img class="portrait" src={portrait} alt="Valentin Peres" width="307" height="364" fetchpriority="high"/>}
+      </div>
     </section>
+    <section class="intro" id="works" aria-labelledby="works-heading"><h2 id="works-heading">Selected Works</h2><p>{home.works}</p></section>
     <div class="gallery">
       {projects.filter(project => project.cover).map((project, index) =>
         <a class="project" href={project.href}>
@@ -45,7 +50,7 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
     <div class="more">{projects.filter(project => !project.cover).map(project => <a href={project.href}>{project.title}</a>)}</div>
     <section id="blog"><h2>Blog</h2>{posts.map(post => <a href={post.href}>{post.title}</a>)}</section>
   </main>
-  <footer><strong>Valentin Peres</strong><a href="./admin/" lang="hu">Szerkesztő</a></footer>
+  <footer id="contact"><div><strong>Valentin Peres</strong><a class="email" href="mailto:valentin.cad@proton.me">valentin.cad@proton.me</a></div><a href="./admin/" lang="hu">Szerkesztő</a></footer>
 </body>
 </html>
 <style>
@@ -68,5 +73,15 @@ const posts = entries.filter(item => item.href.startsWith('./blog/'));
   .more,#blog{margin:3rem 1.8vw}.more a,#blog a{display:block;width:fit-content;text-decoration:underline;text-underline-offset:4px;margin:1rem 0}
   footer{padding:1.6rem 1.8vw;border-top:1px solid;display:flex;align-items:center;justify-content:space-between}footer strong{font-size:1.2rem}
   @media(max-width:640px){header{padding:0 1.1rem;justify-content:space-between}nav{gap:1rem}.wordmark{position:static;transform:scaleX(.84);transform-origin:right}.intro{padding:3.1rem 1.25rem 4rem;min-height:0}.intro p{width:100%}.gallery{grid-template-columns:1fr;gap:2.3rem;padding:0 1rem}.more,#blog{margin:2.8rem 1rem}footer{padding:1.4rem 1rem}}
+  main{max-width:none;margin:0;padding:0} .project{background:transparent} .gallery figure{margin:0} .wordmark{line-height:1} body{margin:0;background:white;font-family:"Century Gothic",Avenir,"Segoe UI",sans-serif}
+  header,#about,footer{background:#d3cfc5}
+  #about{padding:clamp(3.2rem,6vw,7rem) max(6vw,1.3rem) clamp(4rem,8vw,9rem)}
+  .hero{max-width:65rem;margin:auto;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(3rem,8vw,9rem);align-items:start}
+  .hero h1{font-family:Impact,Haettenschweiler,"Arial Narrow",sans-serif;text-transform:uppercase;font-size:clamp(2.45rem,3.75vw,4.2rem);letter-spacing:-.035em;line-height:.99;font-style:normal;font-weight:900;margin:0;max-width:15ch;text-wrap:balance}
+  .bio p{margin:1.7rem 0 2.4rem;line-height:1.55;max-width:53ch}
+  .cta{display:block;text-align:center;border-radius:4rem;padding:1.15rem;background:#d49a82;color:#292725;font-weight:650}
+  .cta:hover{background:#dca991}.portrait{display:block;width:100%;height:auto;aspect-ratio:307/364;object-fit:cover}
+  .intro h2{font-style:italic;font-size:.9rem;margin:0 0 1.85rem}
+  footer .email{display:block;margin-top:.5rem;font-size:1rem}
+  @media(max-width:640px){.hero{grid-template-columns:1fr;gap:2rem}.portrait{max-width:22rem}.bio p{margin:1.3rem 0 1.6rem}.wordmark{font-size:1.05rem}header nav{gap:.8rem}}
 </style>
-
