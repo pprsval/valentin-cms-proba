@@ -1,4 +1,5 @@
 ---
+import '../styles/typography.css';
 const { frontmatter: entry } = Astro.props;
 const {title, cover, description, category, gallery = [], pdf} = entry;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -80,18 +81,18 @@ const date = entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) 
 <footer class="contact"><a href="mailto:valentin.cad@proton.me">valentin.cad@proton.me</a></footer></body></html>
 <style is:global>
 *{box-sizing:border-box}
-body{margin:0;background:#faf7f1;color:#292d2b;font:1.1rem/1.6 system-ui,sans-serif}
+body{margin:0;background:#faf7f1;color:#292d2b;font-size:1.1rem;line-height:1.6}
 main{max-width:48rem;margin:3rem auto;padding:0 1rem}
 img{display:block;max-width:100%;height:auto}
 a{color:inherit;text-underline-offset:.28em}
-h1{font-family:Georgia,serif;line-height:1.05}
+h1{line-height:1.05}
 figure{margin:2rem 0}
-.project{background:#e4e2da;font-family:"Century Gothic",Avenir,"Segoe UI",sans-serif}
+.project{background:#e4e2da}
 .masthead{position:relative;display:flex;align-items:center;height:52px;padding:0 1.8vw;border-bottom:1px solid #444842}
 .masthead nav{display:flex;gap:2.2rem;font-size:.8rem}
 .masthead a{text-decoration:none}.masthead a:hover{text-decoration:underline}
-.brand,.project h1{font-family:Impact,"Arial Narrow","Franklin Gothic Medium",sans-serif;font-weight:900;text-transform:uppercase}
-.brand{position:absolute;left:50%;transform:translateX(-50%) scaleX(.84);font-size:1.4rem;letter-spacing:-.045em;white-space:nowrap}
+.brand,.project h1{text-transform:uppercase}
+.brand{position:absolute;left:50%;transform:translateX(-50%) scaleX(.84);font-size:1.4rem;font-weight:700;letter-spacing:-.045em;white-space:nowrap}
 .project main{max-width:100rem;margin:0 auto;padding:0 4.4vw}
 .project .intro{display:grid;grid-template-columns:1.15fr 1fr;gap:4vw;align-items:end;padding:clamp(3rem,6vw,6rem) 0 clamp(2rem,3.4vw,4rem)}
 .project h1{margin:0;font-size:clamp(2rem,3.8vw,3rem);letter-spacing:-.045em;line-height:1;overflow-wrap:anywhere}
@@ -111,9 +112,7 @@ a.zoom{display:block;cursor:zoom-in}
 #viewer::backdrop{background:rgba(0,0,0,.78)}
 #enlarged{width:100%;height:min(70dvh,58rem);object-fit:contain}
 .viewer-bar{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:.35rem 0}
-.viewer-bar button{background:#363a36;color:white;border:1px solid #777;border-radius:.3rem;min-width:44px;min-height:44px;padding:0 .8rem;cursor:pointer;font:inherit}
+.viewer-bar button{background:#363a36;color:white;border:1px solid #777;border-radius:.3rem;min-width:44px;min-height:44px;padding:0 .8rem;cursor:pointer;font-size:inherit;line-height:inherit}
 .viewer-bar button:disabled{visibility:hidden}
 #caption{text-align:center;overflow-wrap:anywhere}
-.project h1{font-family:"Arial Narrow","Aptos Narrow","Segoe UI",Arial,sans-serif;font-weight:400}
-body.blog-entry main h1{font-weight:400}
 </style>

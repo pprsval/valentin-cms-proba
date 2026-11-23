@@ -67,6 +67,7 @@ collections:
         preview_path: /
         fields:
           - {name: title, label: Főcím, widget: string}
+          - {name: subtitle, label: Alcím, widget: string, required: false}
           - {name: description, label: Bemutatkozás, widget: text}
           - {name: portrait, label: Portré, widget: image, required: false}
           - {name: works, label: A Portfolio oldal bevezetője, widget: text}
