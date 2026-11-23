@@ -45,4 +45,4 @@ gallery:
     image: ../../uploads/hero.png
 pdf: ../../uploads/urban_k1_interactive_kiosk.pdf
 ---
-\*
+\[DESCRIPTION]
