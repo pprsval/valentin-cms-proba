@@ -1,6 +1,7 @@
 {
-  "title": "Expertise forged through engineering rigor",
-  "description": "I’m Valentin Peres. My portfolio brings together CAD design, technical documentation and engineering projects, from the first drawing to the finished detail.",
+  "title": "Freedom Within Parameters and Constraints",
+  "subtitle": "CAD Design · Technical Drafting · Creative Exploration",
+  "description": "\n\nI’m Valentin Peres. My portfolio brings together CAD design, technical documentation and engineering projects, from the first drawing to the finished detail.",
   "portrait": "../../uploads/20260314_0031.jpg",
   "works": "A collection of engineering projects, technical designs, documentation, and creative work. These projects reflect my approach to technical problem-solving, precision, and practical design, combining engineering knowledge with an interest in technology and visual communication.",
   "featured": [
@@ -16,6 +17,5 @@
       "type": "article",
       "slug": "sample"
     }
-  ],
-  "subtitle": ""
+  ]
 }
