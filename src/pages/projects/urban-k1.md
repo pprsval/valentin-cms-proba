@@ -17,31 +17,28 @@ gallery:
     alt: 02. Sheet metal components
     caption: 02. Sheet metal components
   - image: ../../uploads/kiosk-03.png
-    alt: 03. Product vizualization
-    caption: 03. Product vizualization
+    alt: 03. Product Visualization
+    caption: 03. Product Visualization
   - image: ../../uploads/kiosk-04.png
-    caption: 04. Product vizualization
-    alt: 04. Product vizualization
+    caption: 04. Product Visualization
+    alt: 04. Product Visualization
   - image: ../../uploads/kiosk-05.png
-    alt: 05. Product vizualization
-    caption: 05. Product vizualization
-  - alt: 06. Product vizualization
-    caption: 06. Product vizualization
+    alt: 05. Product Visualization
+    caption: 05. Product Visualization
+  - alt: 06. Product Visualization
+    caption: 06. Product Visualization
     image: ../../uploads/hero4.png
-  - alt: 07. Product vizualization
-    caption: 07. Product vizualization
+  - alt: 07. Product Visualization
+    caption: 07. Product Visualization
     image: ../../uploads/hero3.png
-  - alt: 08. Product vizualization
-    caption: 08. Product vizualization
-    image: ../../uploads/hero3.png
-  - alt: 09. Product vizualization
-    caption: 09. Product vizualization
+  - alt: 08. Product Visualization
+    caption: 08. Product Visualization
     image: ../../uploads/hero2.png
-  - alt: 10. Product vizualization
-    caption: 10. Product vizualization
+  - alt: 09. Product Visualization
+    caption: 09. Product Visualization
     image: ../../uploads/hero1.png
-  - alt: 11. Product vizualization
-    caption: 11. Product vizualization
+  - alt: 10. Product Visualization
+    caption: 10. Product Visualization
     image: ../../uploads/hero.png
 pdf: ../../uploads/urban_k1_interactive_kiosk.pdf
 ---
