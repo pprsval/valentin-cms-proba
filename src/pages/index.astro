@@ -71,8 +71,10 @@ const featured = (home.featured ?? defaults).flatMap(selection => {
   .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,14rem),1fr));gap:1.75rem 1rem}
   .gallery .project{min-width:0;max-width:19rem;width:100%;overflow-wrap:anywhere}
   figure{margin:0}figure img{width:100%;aspect-ratio:3/2;object-fit:contain;display:block;background:#f4f2ee}
-  figcaption{display:flex;align-items:baseline;justify-content:space-between;gap:1rem;padding:.65rem 0;border-bottom:1px solid #c5c5bf}
-  figcaption h3{font-size:1.0625rem;font-weight:550;margin:0}figcaption span,footer{font-size:.83rem}
+  figcaption{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:.2rem .5rem;padding:.65rem 0;border-bottom:1px solid #c5c5bf}
+  figcaption h3{font-size:1.0625rem;font-weight:550;margin:0}
+  figcaption span{flex:none;white-space:nowrap}
+  figcaption span,footer{font-size:.83rem}
   .more,#blog{margin:3rem 1.8vw}.more a,#blog a{display:block;width:fit-content;text-decoration:underline;text-underline-offset:4px;margin:1rem 0}
   footer{padding:1.6rem 1.8vw;border-top:1px solid;display:flex;align-items:center;justify-content:space-between}footer strong{font-size:1.2rem}
   @media(max-width:640px){.featured{padding:2rem 1rem 3rem}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem .75rem}figcaption{flex-direction:column;gap:.2rem}.more,#blog{margin:2.8rem 1rem}footer{padding:1.4rem 1rem}}
