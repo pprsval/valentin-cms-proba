@@ -7,15 +7,11 @@
   "featured": [
     {
       "type": "project",
-      "slug": "sample-plate"
+      "slug": "urban-k1"
     },
     {
-      "type": "article",
-      "slug": "sample"
-    },
-    {
-      "type": "article",
-      "slug": "sample"
+      "type": "project",
+      "slug": "urban-k1"
     }
   ]
 }
