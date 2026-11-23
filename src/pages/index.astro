@@ -1,6 +1,8 @@
 ---
 import Header from '../layouts/Header.astro';
+import '../styles/typography.css';
 import home from '../../homepage.json';
+const subtitle = home.subtitle?.trim();
 const portrait = home.portrait?.replace(/^(?:\.\.\/)*\/?uploads\//, './uploads/');
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const modules = import.meta.glob('./{projects,blog}/*.md', { eager: true });
@@ -32,7 +34,12 @@ const featured = (home.featured ?? defaults).flatMap(selection => {
   <main>
     <section id="about" aria-labelledby="headline">
       <div class="hero">
-        <div class="bio"><h1 id="headline">{home.title}</h1><p>{home.description}</p><a class="cta" href="#works">Explore highlights</a></div>
+        <div class="bio">
+          <h1 id="headline">{home.title}</h1>
+          {subtitle && <p class="subtitle">{subtitle}</p>}
+          <p>{home.description}</p>
+          <a class="cta" href="#works">Explore highlights</a>
+        </div>
         {portrait && <img class="portrait" src={portrait} alt="Valentin Peres" width="307" height="364" fetchpriority="high"/>}
       </div>
     </section>
@@ -54,10 +61,10 @@ const featured = (home.featured ?? defaults).flatMap(selection => {
 </html>
 <style>
   :global(*){box-sizing:border-box}
-  :global(body){margin:0;color:#292d2b;background:#fff;font-family:"Century Gothic",Avenir,"Segoe UI",sans-serif}
+  :global(body){margin:0;color:#292d2b;background:#fff}
   a{color:inherit;text-decoration:none}
   a:hover,a:focus-visible{text-decoration:underline;text-underline-offset:.3em}
-  footer strong{font-family:Impact,"Arial Narrow","Franklin Gothic Medium",sans-serif;text-transform:uppercase;font-weight:900;letter-spacing:-.045em}
+  footer strong{text-transform:uppercase;font-weight:700;letter-spacing:-.045em}
   .featured{max-width:72rem;margin:0 auto;padding:3rem 1.25rem 4rem}
   .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,14rem),1fr));gap:1.75rem 1rem}
   .gallery .project{min-width:0;max-width:19rem;width:100%;overflow-wrap:anywhere}
@@ -67,18 +74,19 @@ const featured = (home.featured ?? defaults).flatMap(selection => {
   .more,#blog{margin:3rem 1.8vw}.more a,#blog a{display:block;width:fit-content;text-decoration:underline;text-underline-offset:4px;margin:1rem 0}
   footer{padding:1.6rem 1.8vw;border-top:1px solid;display:flex;align-items:center;justify-content:space-between}footer strong{font-size:1.2rem}
   @media(max-width:640px){.featured{padding:2rem 1rem 3rem}.gallery{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem .75rem}figcaption{flex-direction:column;gap:.2rem}.more,#blog{margin:2.8rem 1rem}footer{padding:1.4rem 1rem}}
-  main{max-width:none;margin:0;padding:0} .project{background:transparent} .gallery figure{margin:0} body{margin:0;background:white;font-family:"Century Gothic",Avenir,"Segoe UI",sans-serif}
+  main{max-width:none;margin:0;padding:0} .project{background:transparent} .gallery figure{margin:0} body{margin:0;background:white}
   #about,footer{background:#d3cfc5}
   #about{padding:clamp(3.2rem,6vw,7rem) max(6vw,1.3rem) clamp(4rem,8vw,9rem)}
   .hero{max-width:65rem;margin:auto;display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:clamp(3rem,8vw,9rem);align-items:start}
-  .hero h1{font-family:Impact,Haettenschweiler,"Arial Narrow",sans-serif;text-transform:uppercase;font-size:clamp(2rem,3vw,3rem);letter-spacing:-.035em;line-height:.99;font-style:normal;font-weight:900;margin:0;max-width:15ch;text-wrap:balance}
+  .hero h1{text-transform:uppercase;font-size:clamp(2rem,3vw,3rem);letter-spacing:-.035em;line-height:.99;font-style:normal;margin:0;max-width:15ch;text-wrap:balance}
   .bio p{font-size:.9375rem;margin:1.7rem 0 2.4rem;line-height:1.55;max-width:53ch}
+  .bio .subtitle{font-size:clamp(1.125rem,2vw,1.375rem);font-weight:650;line-height:1.35;margin:1rem 0 0;overflow-wrap:anywhere}
+  .bio .subtitle + p{margin-top:.65rem}
   .cta{display:block;text-align:center;border-radius:4rem;padding:1.15rem;background:#d49a82;color:#292725;font-weight:650}
   .cta:hover{background:#dca991}.portrait{display:block;width:100%;height:auto;aspect-ratio:307/364;object-fit:cover}
-  .featured h2{font-size:1.375rem;line-height:1.25;font-weight:550;margin:0 0 1.25rem}
+  .featured h2{font-size:1.375rem;line-height:1.25;margin:0 0 1.25rem}
   @media(max-width:340px){.gallery{grid-template-columns:1fr}}
   footer .email{display:block;margin-top:.5rem;font-size:1rem}
   @media(max-width:640px){.hero{grid-template-columns:1fr;gap:2rem}.portrait{max-width:22rem}.bio p{margin:1.3rem 0 1.6rem}}
   .text-cover{aspect-ratio:3/2;padding:8%;display:block;background:#e2dfd6;font-size:1rem;line-height:1.3;overflow:auto;min-height:0}
-.hero h1{-webkit-text-stroke:.4px #d3cfc5}
 </style>
