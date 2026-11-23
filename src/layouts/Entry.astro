@@ -26,7 +26,7 @@ const date = entry.date instanceof Date ? entry.date.toISOString().slice(0, 10) 
     </div>
     {description && <p class="description">{description}</p>}
   </div>
-  {cover && (isProject ? <a class="zoom" href={cover} aria-label="Open project cover"><img class="cover" src={cover} alt=""/></a> : <img class="cover" src={cover} alt=""/>)}
+  {cover && (isProject ? <a class="zoom cover-link" href={cover} aria-label="Open project cover"><img class="cover" src={cover} alt=""/></a> : <img class="cover" src={cover} alt=""/>)}
   <div class="copy">
     {translation && <p><a href={base+'/hu/'+translation+'/'}>Read in Hungarian</a></p>}
     {entry.original && <p><a href={base+'/blog/'+entry.original+'/'}>English version</a></p>}
@@ -98,6 +98,7 @@ figure{margin:2rem 0}
 .project h1{margin:0;font-size:clamp(2rem,3.8vw,3rem);letter-spacing:-.045em;line-height:1;overflow-wrap:anywhere}
 .meta,.project figcaption{font-size:.86rem}.meta{margin:.8rem 0 0}
 .project .description{max-width:35em;margin:0;font-size:clamp(1.05rem,1.5vw,1.4rem);line-height:1.4;overflow-wrap:anywhere}
+.project .cover-link{max-width:720px;margin-inline:auto}
 .project .cover{width:100%;height:auto}
 .project .copy{max-width:48rem;margin:clamp(2rem,5vw,5rem) auto;overflow-wrap:anywhere}
 .project .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:3vw}
