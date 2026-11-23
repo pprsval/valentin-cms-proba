@@ -8,23 +8,41 @@ description: >
 
 
   Independent product design project featuring a custom sheet metal enclosure, ground-mounted structure, rear reinforcement and integrated digital display.
-cover: ../../uploads/slide1.png
+cover: ../../uploads/hero3.png
 gallery:
-  - image: ../../uploads/slide2.png
-    alt: Assembly & part list
-    caption: Assembly & part list
-  - image: ../../uploads/slide3.png
-    alt: Sheet metal components
-    caption: Sheet metal components
-  - image: ../../uploads/slide4.png
-    alt: Product vizualization
-    caption: Product vizualization
-  - image: ../../uploads/slide5.png
-    caption: Product vizualization
-    alt: Product vizualization
-  - image: ../../uploads/slide6.png
-    alt: Product vizualization
-    caption: Product vizualization
+  - image: ../../uploads/kiosk-01.png
+    alt: 01. Assembly & part list
+    caption: 01. Assembly & part list
+  - image: ../../uploads/kiosk-02.png
+    alt: 02. Sheet metal components
+    caption: 02. Sheet metal components
+  - image: ../../uploads/kiosk-03.png
+    alt: 03. Product vizualization
+    caption: 03. Product vizualization
+  - image: ../../uploads/kiosk-04.png
+    caption: 04. Product vizualization
+    alt: 04. Product vizualization
+  - image: ../../uploads/kiosk-05.png
+    alt: 05. Product vizualization
+    caption: 05. Product vizualization
+  - alt: 06. Product vizualization
+    caption: 06. Product vizualization
+    image: ../../uploads/hero4.png
+  - alt: 07. Product vizualization
+    caption: 07. Product vizualization
+    image: ../../uploads/hero3.png
+  - alt: 08. Product vizualization
+    caption: 08. Product vizualization
+    image: ../../uploads/hero3.png
+  - alt: 09. Product vizualization
+    caption: 09. Product vizualization
+    image: ../../uploads/hero2.png
+  - alt: 10. Product vizualization
+    caption: 10. Product vizualization
+    image: ../../uploads/hero1.png
+  - alt: 11. Product vizualization
+    caption: 11. Product vizualization
+    image: ../../uploads/hero.png
 pdf: ../../uploads/urban_k1_interactive_kiosk.pdf
 ---
-hjs
+\*
