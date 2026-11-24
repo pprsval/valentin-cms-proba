@@ -42,4 +42,21 @@ gallery:
     image: ../../uploads/hero.png
 pdf: ../../uploads/urban_k1_interactive_kiosk.pdf
 ---
-\[DESCRIPTION]
+
+
+### Self-Service and Information Kiosk
+
+A touchscreen self-service and information terminal constructed from painted sheet metal with thicknesses of 3, 4 and 8 mm.
+
+The design combines minimalist aesthetics with a robust, timeless construction, optimised for ease of assembly.Developed in Autodesk Inventor, the project brings together technical design, documentation and product visualisation.
+
+**Project scope:**
+
+* 3D CAD modelling and assembly design
+* Sheet metal design and flat pattern development
+* Manufacturing-oriented component design
+* Exploded assembly views and parts lists
+* Technical illustrations for assembly and user manuals
+* Photorealistic renderings for product catalogues and marketing materials
+
+The complete project presentation is available for download in PDF format at the end of the gallery.
